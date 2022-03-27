@@ -58,7 +58,7 @@ export default function Login() {
               label="Email"
               inputProps={{ type: 'email' }}
               onChange={(e) => setEmail(e.target.value)}
-            />
+            ></TextField>
           </ListItem>
           <ListItem>
             <TextField
@@ -68,7 +68,7 @@ export default function Login() {
               label="Password"
               inputProps={{ type: 'password' }}
               onChange={(e) => setPassword(e.target.value)}
-            />
+            ></TextField>
           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit" fullWidth color="primary">
@@ -77,7 +77,7 @@ export default function Login() {
           </ListItem>
           <ListItem>
             Don't have an account? &nbsp;
-            <NextLink href="/register" passHref>
+            <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
               <Link>Register</Link>
             </NextLink>
           </ListItem>
