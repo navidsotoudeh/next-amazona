@@ -1,83 +1,87 @@
-import {
-  Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from '@material-ui/core';
-import NextLink from 'next/link';
-import Layout from '../components/Layout';
-import db from '../utils/db';
-import Product from '../models/Product';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { Store } from '../utils/Store';
+/* eslint-disable @next/next/no-img-element */
+import NextLink from "next/link";
+import { Grid, Link, Typography } from "@material-ui/core";
+import Layout from "../components/Layout";
+import db from "../utils/db";
+import Product from "../models/Product";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { Store } from "../utils/Store";
+import ProductItem from "../components/ProductItem";
+import Carousel from "react-material-ui-carousel";
+import useStyles from "../utils/styles";
 
 export default function Home(props) {
+  const classes = useStyles();
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
-  const { products } = props;
+  const { topRatedProducts, featuredProducts } = props;
+  console.log("featuredProducts", featuredProducts);
   const addToCartHandler = async (product) => {
     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
   return (
     <Layout>
-      <div>
-        <h1>Products</h1>
-        <Grid container spacing={3}>
-          {products.map((product) => (
-            <Grid item md={4} key={product.name}>
-              <Card>
-                <NextLink href={`/product/${product.slug}`} passHref>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      image={product.image}
-                      title={product.name}
-                    ></CardMedia>
-                    <CardContent>
-                      <Typography>{product.name}</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </NextLink>
-                <CardActions>
-                  <Typography>${product.price}</Typography>
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() => addToCartHandler(product)}
-                  >
-                    Add to cart
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </div>
+      <Carousel className={classes.mt1} animation="slide">
+        {featuredProducts.map((product) => (
+          <NextLink
+            key={product._id}
+            href={`/product/${product.slug}`}
+            passHref
+          >
+            <Link>
+              <img
+                src={product.featuredImage}
+                alt={product.name}
+                className={classes.featuredImage}
+              />
+            </Link>
+          </NextLink>
+        ))}
+      </Carousel>
+      <Typography variant="h2">Popular Products</Typography>
+      <Grid container spacing={3}>
+        {topRatedProducts.map((product) => (
+          <Grid item md={4} key={product.name}>
+            <ProductItem
+              product={product}
+              addToCartHandler={addToCartHandler}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.find({}).lean();
+  const featuredProductsDocs = await Product.find(
+    { isFeatured: true },
+    "-reviews"
+  )
+    .lean()
+    .limit(3);
+  const topRatedProductsDocs = await Product.find({}, "-reviews")
+    .lean()
+    .sort({
+      rating: -1,
+    })
+    .limit(6);
   await db.disconnect();
   return {
     props: {
-      products: products.map(db.convertDocToObj),
+      featuredProducts: featuredProductsDocs.map(db.convertDocToObj),
+      topRatedProducts: topRatedProductsDocs.map(db.convertDocToObj),
     },
   };
 }
