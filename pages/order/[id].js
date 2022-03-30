@@ -277,7 +277,7 @@ function Order({ params }) {
                                     alt={item.name}
                                     width={50}
                                     height={50}
-                                  ></Image>
+                                  />
                                 </Link>
                               </NextLink>
                             </TableCell>
@@ -364,7 +364,7 @@ function Order({ params }) {
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
-                        ></PayPalButtons>
+                        />
                       </div>
                     )}
                   </ListItem>
