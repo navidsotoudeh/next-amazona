@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edb04265-b7d3-42e0-bdf7-feab91bd7669" name="Changes" comment="Add carousel for home page">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/order/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/order/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/shipping.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/shipping.js" afterDir="false" />
+    <list default="true" id="edb04265-b7d3-42e0-bdf7-feab91bd7669" name="Changes" comment="Add map for locate customers">
+      <change afterPath="$PROJECT_DIR$/pages/map.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +58,7 @@
       <workItem from="1648467257060" duration="34394000" />
       <workItem from="1648555338160" duration="3938000" />
       <workItem from="1648566141281" duration="1076000" />
-      <workItem from="1648567601281" duration="28343000" />
+      <workItem from="1648567601281" duration="28445000" />
     </task>
     <task id="LOCAL-00001" summary="json.parse(cookie) bug get fixed">
       <created>1648392406980</created>
@@ -112,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648658353611</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add map for locate customers">
+      <created>1648666854600</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1648666854600</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,7 +143,8 @@
     <MESSAGE value="Ready to deploy2" />
     <MESSAGE value="Ready to deploy3" />
     <MESSAGE value="Add carousel for home page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add carousel for home page" />
+    <MESSAGE value="Add map for locate customers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add map for locate customers" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
